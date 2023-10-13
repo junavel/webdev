@@ -282,46 +282,19 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Add Activities</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link" href="add_act.php">
+            <i class="bi bi-menu-button-wide"></i><span>Add Activities</span>
         </a>
-        <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="add_act.php" class="active">
-              <i class="bi bi-circle"></i><span>Add Activity</span>
-            </a>
-          </li>
-          
-        </ul>
-      </li><!-- End Components Nav -->
+    </li>
+    <!-- End Components Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
+    <li class="nav-item">
+      <a class="nav-link" href="activity_list.php">
+          <i class="bi bi-journal-text"></i><span>All Activities</span>
+      </a>
+  </li>
+  <!-- End Forms Nav -->
+
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -410,34 +383,6 @@
         </a>
       </li><!-- End Contact Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-card-list"></i>
-          <span>Register</span>
-        </a>
-      </li><!-- End Register Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Login</span>
-        </a>
-      </li><!-- End Login Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
-          <i class="bi bi-dash-circle"></i>
-          <span>Error 404</span>
-        </a>
-      </li><!-- End Error 404 Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
-
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -455,55 +400,60 @@
       </nav>
     </div><!-- End Page Title -->
 
+    <main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Add Activity</h1>
+    </div><!-- End Page Title -->
+
     <section class="section">
-      <div class="row">
-        <div class="col-lg-6">
-          <!-- Your form goes here -->
-          <form id="yourFormID" class="yourFormClass" action="add_act.php" method="POST">
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- Your form goes here -->
+                <form id="yourFormID" class="yourFormClass" action="add_act.php" method="POST">
 
-            <!-- Title -->
-            <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
-              <input type="text" class="form-control" id="title" name="title" required>
+                    <!-- Title -->
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Content</label>
+                        <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+
+                    <!-- Time -->
+                    <div class="mb-3">
+                        <label for="time" class="form-label">Time</label>
+                        <input type="time" class="form-control" id="time" name="time" required>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" required>
+                    </div>
+
+                    <!-- OOTD -->
+                    <div class="mb-3">
+                        <label for="ootd" class="form-label">OOTD</label>
+                        <input type="text" class="form-control" id="ootd" name="ootd" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
-        
-            <!-- Description -->
-            <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-            </div>
-        
-            <!-- Date -->
-            <div class="mb-3">
-              <label for="date" class="form-label">Date</label>
-              <input type="date" class="form-control" id="date" name="date" required>
-            </div>
-        
-            <!-- Time -->
-            <div class="mb-3">
-              <label for="time" class="form-label">Time</label>
-              <input type="time" class="form-control" id="time" name="time" required>
-            </div>
-        
-            <!-- Location -->
-            <div class="mb-3">
-              <label for="location" class="form-label">Location</label>
-              <input type="text" class="form-control" id="location" name="location" required>
-            </div>
-        
-            <!-- OOTD -->
-            <div class="mb-3">
-              <label for="ootd" class="form-label">OOTD</label>
-              <input type="text" class="form-control" id="ootd" name="ootd" required>
-            </div>
-        
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
         </div>
-
     </section>
-
-    <?php
+</main><!-- End #main -->
+<?php
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database connection parameters
@@ -522,18 +472,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Get form data
     $title = $_POST["title"];
-    $description = $_POST["description"];
+    $content = $_POST["content"];
     $date = $_POST["date"];
     $time = $_POST["time"];
     $location = $_POST["location"];
     $ootd = $_POST["ootd"];
     $status = "pending";
 
-    $sql = "INSERT INTO addact (title, description, date, time, location, ootd) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO activities (title, content, date, time, location, ootd, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     // Prepare and bind the SQL statement
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssss", $title, $description, $date, $time, $location, $ootd, $status);
+    $stmt->bind_param("sssssss", $title, $content, $date, $time, $location, $ootd, $status);
 
     // Execute the SQL statement
     if ($stmt->execute() === TRUE) {
@@ -556,7 +506,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>JBelle</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>JBell</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->

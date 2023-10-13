@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Forms / Elements - NiceAdmin Bootstrap Template</title>
+  <title>User Dashboard</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -37,7 +37,6 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
 <body>
 
   <!-- ======= Header ======= -->
@@ -45,8 +44,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
+        <img src="assets/img/bell.jpg" alt="">
+        <span class="d-none d-lg-block">JBell</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -281,111 +280,20 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Badges</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-buttons.html">
-              <i class="bi bi-circle"></i><span>Buttons</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-cards.html">
-              <i class="bi bi-circle"></i><span>Cards</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-carousel.html">
-              <i class="bi bi-circle"></i><span>Carousel</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-list-group.html">
-              <i class="bi bi-circle"></i><span>List group</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-modal.html">
-              <i class="bi bi-circle"></i><span>Modal</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tabs.html">
-              <i class="bi bi-circle"></i><span>Tabs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-pagination.html">
-              <i class="bi bi-circle"></i><span>Pagination</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-progress.html">
-              <i class="bi bi-circle"></i><span>Progress</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-spinners.html">
-              <i class="bi bi-circle"></i><span>Spinners</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tooltips.html">
-              <i class="bi bi-circle"></i><span>Tooltips</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
+  <li class="nav-item">
+    <a class="nav-link" href="add_act.php">
+        <i class="bi bi-menu-button-wide"></i><span>Add Activities</span>
+    </a>
+</li>
+<!-- End Components Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link " data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.php" class="active">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
+<li class="nav-item">
+  <a class="nav-link" href="activity_list.php">
+      <i class="bi bi-journal-text"></i><span>All Activities</span>
+  </a>
+</li>
+<!-- End Forms Nav -->
+
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -428,28 +336,7 @@
         </ul>
       </li><!-- End Charts Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="icons-bootstrap.html">
-              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-remix.html">
-              <i class="bi bi-circle"></i><span>Remix Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-boxicons.html">
-              <i class="bi bi-circle"></i><span>Boxicons</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Icons Nav -->
+   
 
       <li class="nav-heading">Pages</li>
 
@@ -474,114 +361,106 @@
         </a>
       </li><!-- End Contact Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-card-list"></i>
-          <span>Register</span>
-        </a>
-      </li><!-- End Register Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Login</span>
-        </a>
-      </li><!-- End Login Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
-          <i class="bi bi-dash-circle"></i>
-          <span>Error 404</span>
-        </a>
-      </li><!-- End Error 404 Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
-
-    </ul>
-
+</ul>
   </aside><!-- End Sidebar-->
 
-  <main id="main" class="main">
-    <!-- Include Chart.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Create a canvas element for the bar graph -->
-    <div style="position: relative; height: 50vh; width: 80vw;">
-        <canvas id="activityBarChart"></canvas>
-    </div>
 
-    <?php
-    // Use PHP to retrieve data from your database and pass it to JavaScript
-    // Replace with your database connection details
-    $servername = 'localhost';
-    $username = 'root';
-    $password = '';
-    $dbname = 'mywebsite';
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Activities</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Activity</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <?php
+        // Replace with your database connection details
+        $servername = 'localhost';
+        $username = 'root';
+        $password = '';
+        $dbname = 'mywebsite';
 
-    // Create a connection to the database
-    $conn = new mysqli($servername, $username, $password, $dbname);
+        // Create a connection to the database
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Check the connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+        // Check the connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
 
-    // Query to get activity counts for each month
-    $sql = "SELECT MONTH(date) as month, COUNT(*) as count FROM useract GROUP BY MONTH(date)";
-    $result = $conn->query($sql);
+        // Query to select all activities
+        $sql = "SELECT activity_id, title, content, date, time, location, ootd, status FROM activities";
+        $result = $conn->query($sql);
 
-    $activityData = [];
-    while ($row = $result->fetch_assoc()) {
-        $monthName = date("F", mktime(0, 0, 0, $row['month'], 1));
-        $activityData[$monthName] = $row['count'];
-    }
-    $conn->close();
-    ?>
+        if ($result->num_rows > 0) {
+            echo '<div class="row">';
+            echo '<div class="col-lg-12">';
+            echo '<div class="card">';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">All Activities</h5>';
 
-    <script>
-        // Sample data (replace with data from your database)
-        const activityData = <?php echo json_encode($activityData); ?>;
+            // Create a responsive table to display the list of activities
+            echo '<div class="table-responsive">';
+            echo '<table class="table table-striped table-bordered">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>Title</th>';
+            echo '<th>Content</th>';
+            echo '<th>Date</th>';
+            echo '<th>Time</th>';
+            echo '<th>Location</th>';
+            echo '<th>OOTD</th>';
+            echo '<th>Status</th>';
+            echo '<th>Action</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
 
-        // Extract months and counts from the data
-        const months = Object.keys(activityData);
-        const counts = Object.values(activityData);
+            // Output data of each activity
+            while ($row = $result->fetch_assoc()) {
+                echo '<tr>';
+                echo '<td>' . $row['title'] . '</td>';
+                echo '<td>' . $row['content'] . '</td>';
+                echo '<td>' . $row['date'] . '</td>';
+                echo '<td>' . $row['time'] . '</td>';
+                echo '<td>' . $row['location'] . '</td>';
+                echo '<td>' . $row['ootd'] . '</td>';
+                echo '<td>' . $row['status'] . '</td>';
+                // Add an Edit link that includes the activity_id in the URL
+                echo '<td><button class="btn btn-primary edit-button" data-activity-id="' . $row['activity_id'] . '">Edit</button></td>';
 
-        // Create a bar chart
-        const ctx = document.getElementById("activityBarChart").getContext("2d");
-        new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: months,
-                datasets: [
-                    {
-                        label: "User Activities",
-                        backgroundColor: "rgba(75, 192, 192, 0.2)",
-                        borderColor: "rgba(75, 192, 192, 1)",
-                        borderWidth: 1,
-                        data: counts,
-                    },
-                ],
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        });
-    </script>
+                echo '</tr>';
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+            echo '</div>'; // Close the responsive table
+
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        } else {
+            echo 'No activities found.';
+        }
+
+        // Close the database connection
+        $conn->close();
+        ?>
+      </section>
+
+
 </main><!-- End #main -->
+
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>MyWebsite</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->
@@ -606,7 +485,7 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-</body>
 
+</body>
 
 </html>
