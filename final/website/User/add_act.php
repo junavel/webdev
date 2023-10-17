@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Components / Modal - NiceAdmin Bootstrap Template</title>
+  <title>Add Activity</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -46,7 +46,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/bell.jpg" alt="">
-        <span class="d-none d-lg-block">JBelle</span>
+        <span class="d-none d-lg-block">JBell</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -337,28 +337,7 @@
         </ul>
       </li><!-- End Charts Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="icons-bootstrap.html">
-              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-remix.html">
-              <i class="bi bi-circle"></i><span>Remix Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-boxicons.html">
-              <i class="bi bi-circle"></i><span>Boxicons</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Icons Nav -->
+     
 
       <li class="nav-heading">Pages</li>
 

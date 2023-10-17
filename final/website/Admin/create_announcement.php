@@ -370,64 +370,64 @@
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Announcement</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Announcements</li>
+                <li class="breadcrumb-item active">Create Announcement</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
 
-<div class="pagetitle">
-    <h1>Announcement</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Announcements</li>
-            <li class="breadcrumb-item active">Create Announcement</li>
-        </ol>
-    </nav>
-</div><!-- End Page Title -->
-
-<div class="container mt-5">
-    <h2>Create Announcement</h2>
-    <form method="POST" action="send_announcement.php">
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="title" class="form-control" id="title" required>
-        </div>
-        <div class="mb-3">
-            <label for="content" class="form-label">Content</label>
-            <textarea class="form-control" name="content" id="content" rows="4" required></textarea>
-        </div>
-        <label for="target" class="form-label">Target:</label>
-        <select id="target" name="target" class="form-select" required>
-            <option value="public">Public</option>
-            <option value="selected">Selected Users</option>
-        </select>
-        <div id="selectedUsers" style="display:none;">
-            <label for="users" class="form-label">Select Users:</label>
-            <select id="users" name="users[]" class="form-select" multiple>
-                <?php
-                // Replace with your database connection code
-                $conn = mysqli_connect("localhost", "root", "", "mywebsite");
-
-                // Check the connection
-                if (!$conn) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
-
-                // Fetch users from the database and populate the options
-                $sql = "SELECT id, email FROM access"; // Replace with your actual query
-                $result = mysqli_query($conn, $sql);
-
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo '<option value="' . $row['id'] . '">' . $row['email'] . '</option>';
-                    }
-                }
-
-                // Close the database connection
-                mysqli_close($conn);
-                ?>
+    <div class="container mt-5">
+        <h2>Create Announcement</h2>
+        <form method="POST" action="send_announcement.php">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="title" class="form-control" id="title" required>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Content</label>
+                <textarea class="form-control" name="content" id="content" rows="4" required></textarea>
+            </div>
+            <label for="target" class="form-label">Target:</label>
+            <select id="target" name="target" class="form-select" required>
+                <option value="public">Public</option>
+                <option value="selected">Selected Users</option>
             </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Send Announcement</button>
-    </form>
-</div>
+            <div id="selectedUsers" style="display:none;">
+                <label for="users" class="form-label">Select Users:</label>
+                <select id="users" name="users[]" class="form-select" multiple>
+                    <?php
+                    // Replace with your database connection code
+                    $conn = mysqli_connect("localhost", "root", "", "mywebsite");
+
+                    // Check the connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+
+                    // Fetch users from the database and populate the options
+                    $sql = "SELECT id, email FROM access"; // Replace with your actual query
+                    $result = mysqli_query($conn, $sql);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<option value="' . $row['id'] . '">' . $row['email'] . '</option>';
+                        }
+                    }
+
+                    // Close the database connection
+                    mysqli_close($conn);
+                    ?>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" name="submit">Send Announcement</button>
+        </form>
+    </div>
+</main>
 
 <script>
     // Show the user selection when "Selected Users" is chosen
@@ -436,7 +436,7 @@
         if (this.value === "selected") {
             selectedUsers.style.display = "block";
         } else {
-            selectedUsers.style.display = "none";
+            selectedUsers.style display = "none";
         }
     });
 </script>
