@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>User Dashboard</title>
+  <title>Activity List</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -37,67 +37,7 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-<style>
-  /* Style for the modal */
-  #editModal {
-  text-align: center;
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fefefe;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  z-index: 1;
-  width: 60%;
-  max-width: 400px;
-  max-height: 60%; /* Adjust the max-height to make the modal shorter */
-}
 
-
-  /* Style for the close button */
-  #closeEditModal {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    text-align: center;
-  }
-
-  /* Style for the form elements */
-  #editActivityForm {
-    text-align: left;
-  }
-
-  #editActivityForm label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-
-  #editActivityForm input[type="text"],
-  #editActivityForm input[type="date"],
-  #editActivityForm input[type="time"],
-  #editActivityForm textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  #editActivityForm button[type="submit"] {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-</style>
 
 <body>
 
@@ -316,7 +256,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="../logout.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -356,48 +296,6 @@
 </li>
 <!-- End Forms Nav -->
 
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-echarts.html">
-              <i class="bi bi-circle"></i><span>ECharts</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
-
    
 
       <li class="nav-heading">Pages</li>
@@ -426,9 +324,7 @@
 </ul>
   </aside><!-- End Sidebar-->
 
-
-
-<main id="main" class="main">
+  <main id="main" class="main">
     <div class="pagetitle">
         <h1>Activities</h1>
         <nav>
@@ -455,7 +351,7 @@
         }
 
         // Query to select all activities
-        $sql = "SELECT activity_id, title, content, date, time, location, ootd, status FROM activities";
+        $sql = "SELECT id, title, content, date, time, location, ootd, status, remarks FROM activities";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -478,30 +374,28 @@
             echo '<th>OOTD</th>';
             echo '<th>Status</th>';
             echo '<th>Action</th>';
+            echo '<th>Remarks</th>';
             echo '</tr>';
             echo '</thead>';
             echo '<tbody>';
 
             // Output data of each activity
             while ($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo '<td>' . $row['title'] . '</td>';
-                echo '<td>' . $row['content'] . '</td>';
-                echo '<td>' . $row['date'] . '</td>';
-                echo '<td>' . $row['time'] . '</td>';
-                echo '<td>' . $row['location'] . '</td>';
-                echo '<td>' . $row['ootd'] . '</td>';
-                echo '<td>' . $row['status'] . '</td>';
-                // Add an Edit link that includes the activity_id in the URL
-                echo '<td><button class="btn btn-primary edit-button" data-activity-id="' . $row['activity_id'] . '">Edit</button></td>';
-
-                echo '</tr>';
+              echo '<tr>';
+              echo '<td>' . $row['title'] . '</td>';
+              echo '<td>' . $row['content'] . '</td>';
+              echo '<td>' . $row['date'] . '</td>';
+              echo '<td>' . $row['time'] . '</td>';
+              echo '<td>' . $row['location'] . '</td>';
+              echo '<td>' . $row['ootd'] . '</td>';
+              echo '<td>' . $row['status'] . '</td>';
+              echo '<td><button class="btn btn-primary edit-button" data-activity-id="' . $row['id'] . '">Edit</button></td>';
+              echo '<td>' . $row['remarks'] . '</td>';
+              echo '</tr>';
             }
-
             echo '</tbody>';
             echo '</table>';
             echo '</div>'; // Close the responsive table
-
             echo '</div>';
             echo '</div>';
             echo '</div>';
@@ -513,66 +407,28 @@
         // Close the database connection
         $conn->close();
         ?>
-      </section>
+    </section>
+    <script>
+        // Get all the "Edit" buttons by their class name
+        const editButtons = document.querySelectorAll('.edit-button');
 
-<!-- The Modal -->
-<div id="editModal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeEditModal">&times;</span>
-    <h2>Edit Activity</h2>
-    <form id="editActivityForm">
-      <!-- Add input fields for editing activity details here -->
-      <form id="editActivityForm" action="update_activity.php" method="POST">
-      <input type="text" id="editTitle" name="editTitle" class="form-control" placeholder="Title">
-      <textarea id="editContent" name="editContent" class="form-control" placeholder="Content"></textarea>
-      <input type="date" id="editDate" name="editDate" class="form-control" placeholder="Date">
-      <input type="time" id="editTime" name="editTime" class="form-control" placeholder="Time">
-      <input type="text" id="editLocation" name="editLocation" class="form-control" placeholder="Location">
-      <input type="text" id="editOOTD" name="editOOTD" class="form-control" placeholder="OOTD">
-      <button type="submit" class="btn btn-primary">Save Changes</button>
-      
+        // Function to handle the "Edit" button click
+        function handleEditClick(event) {
+            // Get the activity ID from the button's data-activity-id attribute
+            const activityId = event.currentTarget.getAttribute('data-activity-id');
 
-    </form>
-  </div>
-</div>
+            // Redirect to the edit page (edit.php) with the activity ID as a parameter
+            window.location.href = `edit.php?id=${activityId}`;
+        }
+
+        // Add a click event listener to each "Edit" button
+        editButtons.forEach((button) => {
+            button.addEventListener('click', handleEditClick);
+        });
 
 
-      
- <!-- JavaScript for opening and closing the edit modal -->
-<script>
-  const editModal = document.getElementById('editModal');
-  const editButtons = document.querySelectorAll('.edit-button');
-  const closeEditModal = document.getElementById('closeEditModal');
-  const editForm = document.getElementById('editForm');
-
-  // Function to open the edit modal
-  function openEditModal() {
-    editModal.style.display = 'block';
-  }
-
-  // Function to close the edit modal
-  function closeEditModalFunction() {
-    editModal.style.display = 'none';
-  }
-
-  // Event listeners for opening and closing the modal
-  editButtons.forEach((button) => {
-    button.addEventListener('click', openEditModal);
-  });
-
-  closeEditModal.addEventListener('click', closeEditModalFunction);
-
-  // Prevent the form from submitting (you'll need to handle the form submission)
-  editForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    // Handle the form submission here (e.g., update the activity)
-    closeEditModalFunction();
-  });
-</script>
-
-
-</main><!-- End #main -->
-
+    </script>
+</main>
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">

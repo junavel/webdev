@@ -255,7 +255,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="../logout.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -294,11 +294,6 @@
           <li>
             <a href="announcement_list.php" class="active">
               <i class="bi bi-circle"></i><span>List Of Announcements</span>
-            </a>
-          </li>
-          <li>
-            <a href="history.php" class="active">
-              <i class="bi bi-circle"></i><span>History</span>
             </a>
           </li>
           

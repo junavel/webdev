@@ -255,7 +255,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="../logout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -297,11 +297,7 @@
               <i class="bi bi-circle"></i><span>List Of Announcements</span>
             </a>
           </li>
-          <li>
-            <a href="history.php">
-              <i class="bi bi-circle"></i><span>History</span>
-            </a>
-          </li>
+         
         </ul>
       </li><!-- End Components Nav -->
 
@@ -367,78 +363,88 @@
     </ul>
 
   </aside><!-- End Sidebar-->
-
   <main id="main" class="main">
-    <div class="pagetitle">
-        <h1>Gender</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Pie Chart</li>
-                <li class="breadcrumb-item active">Gender</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Pie Chart</h5>
-
-                        <!-- Pie Chart -->
-                        <div id="pieChart"></div>
-
-                        <?php
-                        // Replace with your database connection details
-                        $servername = 'localhost';
-                        $username = 'root';
-                        $password = '';
-                        $dbname = 'mywebsite';
-
-                        // Create a connection to the database
-                        $conn = new mysqli($servername, $username, $password, $dbname);
-
-                        // Check the connection
-                        if ($conn->connect_error) {
-                            die("Connection failed: " . $conn->connect_error);
-                        }
-
-                        // Query to count the number of users by gender
-                        $sql = "SELECT gender, COUNT(*) as count FROM access GROUP BY gender";
-                        $result = $conn->query($sql);
-
-                        $labels = [];
-                        $data = [];
-
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                $labels[] = $row['gender'];
-                                $data[] = $row['count'];
+        <div class="pagetitle">
+            <h1>Gender</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Pie Chart</li>
+                    <li class="breadcrumb-item active">Gender</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+    
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Pie Chart</h5>
+    
+                            <!-- Pie Chart -->
+                            <canvas id="genderPieChart"></canvas>
+    
+                            <?php
+                            // Replace with your database connection details
+                            $servername = 'localhost';
+                            $username = 'root';
+                            $password = '';
+                            $dbname = 'mywebsite';
+    
+                            // Create a connection to the database
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+    
+                            // Check the connection
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
                             }
-                        }
-                        ?>
+    
+                            // Query to count the number of users by gender
+                            $sql = "SELECT gender, COUNT(*) as count FROM access GROUP BY gender";
+                            $result = $conn->query($sql);
+    
+                            $labels = [];
+                            $data = [];
+                            $colors = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 206, 86)']; // Define colors
+    
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $labels[] = $row['gender'];
+                                    $data[] = $row['count'];
+                                }
+                            }
+                            ?>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        new Chart(document.getElementById("genderPieChart"), {
+            type: 'pie',
+            data: {
+                labels: <?php echo json_encode($labels); ?>,
+                datasets: [{
+                    data: <?php echo json_encode($data); ?>,
+                    backgroundColor: <?php echo json_encode($colors); ?>,
+                }],
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: true,
+                },
+                rotation: -Math.PI,  // Set rotation to 180 degrees (0 degrees will keep the pie flat)
+            },
+        });
+    });
+</script>
 
-                        <script>
-                            document.addEventListener("DOMContentLoaded", () => {
-                                new ApexCharts(document.querySelector("#pieChart"), {
-                                    series: <?php echo json_encode($data); ?>,
-                                    chart: {
-                                        height: 350,
-                                        type: 'pie',
-                                    },
-                                    labels: <?php echo json_encode($labels); ?>,
-                                }).render();
-                            });
-                        </script>
-                        <!-- End Pie Chart -->
+                            <!-- End Pie Chart -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</main><!-- End #main -->
+        </section>
+    </main><!-- End #main -->
 <!-- Include Chart.js library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -449,7 +455,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>JBelle</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>JBell</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->

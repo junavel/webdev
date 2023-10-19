@@ -255,7 +255,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="../logout.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -296,11 +296,7 @@
               <i class="bi bi-circle"></i><span>List Of Announcements</span>
             </a>
           </li>
-          <li>
-            <a href="history.php" class="active">
-              <i class="bi bi-circle"></i><span>History</span>
-            </a>
-          </li>
+          
           
         </ul>
       </li><!-- End Components Nav -->
@@ -390,7 +386,7 @@
                 }
 
                 // Query to fetch announcements from the database
-                $sql = "SELECT * FROM announcement ORDER BY date DESC, time DESC";
+                $sql = "SELECT * FROM announcements ORDER BY date DESC, time DESC";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {

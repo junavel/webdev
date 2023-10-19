@@ -297,11 +297,6 @@
               <i class="bi bi-circle"></i><span>List Of Announcements</span>
             </a>
           </li>
-          <li>
-            <a href="history.php">
-              <i class="bi bi-circle"></i><span>History</span>
-            </a>
-          </li>
          
         </ul>
       </li><!-- End Components Nav -->
@@ -368,25 +363,87 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+  <main>
+    <div style="width: 80%; margin: 0 auto;">
+        <canvas id="activityChart" style="max-height: 400px;"></canvas>
+    </div>
+</main>
 
- 
-<main>
-<canvas id="userActivityChart" width="400" height="200"></canvas>
+<!-- Include Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<?php
+// Database connection details
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'mywebsite';
+
+// Create a connection to the database
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+/// SQL query to count activities for each month
+$sql = "SELECT MONTH(date) AS month, COUNT(id) AS activity_count FROM activities GROUP BY MONTH(date)";
+
+// Execute the query
+$result = $conn->query($sql);
+
+// Initialize arrays to store months and activity counts
+$months = [];
+$activityCounts = [];
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $months[] = $row['month'];
+        $activityCounts[] = $row['activity_count'];
+    }
+}
+
+
+// Close the database connection
+$conn->close();
+?>
+
 <script>
-const activityData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-  datasets: [
-    {
-      label: 'User Activity',
-      data: [12, 19, 3, 5, 2],
-      backgroundColor: 'rgba(75, 192, 192, 0.2)', // Bar color
-      borderColor: 'rgba(75, 192, 192, 1)', // Border color
-      borderWidth: 1, // Border width
+  // Create a bar chart using Chart.js
+var ctx = document.getElementById('activityChart').getContext('2d');
+var activityChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($months); ?>, // Months (numeric)
+        datasets: [{
+            label: 'Activity Count',
+            data: <?php echo json_encode($activityCounts); ?>, // Activity counts
+            backgroundColor: 'rgba(75, 192, 192, 0.6)', // Bar color
+            borderWidth: 1
+        }]
     },
-  ],
-};</script>
+    options: {
+        scales: {
+            x: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Months'
+                }
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Activity Count'
+                }
+            }
+        }
+    }
+});
 
-</main><!-- End #main -->
+</script>
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">

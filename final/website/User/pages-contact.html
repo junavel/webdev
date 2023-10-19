@@ -255,16 +255,12 @@
               <hr class="dropdown-divider">
             </li>
 
-                <li>
-                  <a class="dropdown-item d-flex align-items-center" href="../logout.php">
-                      <i class="bi bi-box-arrow-right"></i>
-                      <span>Sign Out</span>
-                  </a>
-              </li>
-              
-            
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="../logout.php">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
               </a>
-          </li>
+            </li>
 
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
@@ -280,84 +276,27 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link collapsed" href="index.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
+  <li class="nav-item">
+    <a class="nav-link" href="add_act.php">
+        <i class="bi bi-menu-button-wide"></i><span>Add Activities</span>
+    </a>
+</li>
+<!-- End Components Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Announcements</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          
-          <li>
-            <a href="create_announcement.php">
-              <i class="bi bi-circle"></i><span>Create Announcement</span>
-            </a>
-          </li>
-          <li>
-            <a href="announcement_list.php">
-              <i class="bi bi-circle"></i><span>List Of Announcements</span>
-            </a>
-          </li>
-          <li>
-            <a href="history.php">
-              <i class="bi bi-circle"></i><span>History</span>
-            </a>
-          </li>
-         
-        </ul>
-      </li><!-- End Components Nav -->
+<li class="nav-item">
+  <a class="nav-link" href="activity_list.php">
+      <i class="bi bi-journal-text"></i><span>All Activities</span>
+  </a>
+</li>
+<!-- End Forms Nav -->
 
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>List of Members</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="admin.php">
-              <i class="bi bi-circle"></i><span>Admin</span>
-            </a>
-          </li>
-          <li>
-            <a href="user.php">
-              <i class="bi bi-circle"></i><span>User</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link" href="activity.php">
-          <i class="bi bi-journal-text"></i><span>Users Activities</span>
-        </a>
-      </li>
-
-      
-      <li class="nav-item">
-        <a class="nav-link" href="genderPieChart.php">
-          <i class="bi bi-bar-chart"></i><span>Gender</span>
-        </a>
-      </li>
-      <!-- End Tables Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Pie Chart</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          
-          <li>
-            <a href="genderPieChart.php">
-              <i class="bi bi-circle"></i><span>Gender</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
+   
 
       <li class="nav-heading">Pages</li>
 
@@ -367,7 +306,6 @@
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
-
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
@@ -382,8 +320,8 @@
           <span>Contact</span>
         </a>
       </li><!-- End Contact Page Nav -->
-      
-    </ul>
+
+</ul>
 
   </aside><!-- End Sidebar-->
 

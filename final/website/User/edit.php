@@ -1,491 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Activity</title>
+    <style>
+        body {
+            background-image: url('assets/img/orange.jpg'); /* Replace with your background image URL */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-  <title>User Dashboard</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+        .container {
+            backdrop-filter: blur(10px); /* Adjust the blur intensity as needed */
+            background-color: rgba(255, 255, 255, 0.7); /* Adjust the background color and opacity as needed */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        .edit-form label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+        }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        .edit-form input, .edit-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+        .edit-form button {
+            background-color: #F4A261;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
 
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+        .edit-form button:hover {
+            background-color: #EE6352;
+        }
+        .radio-label {
+            display: flex;
+            align-items: center;
+            margin-right: 20px; /* Adjust the margin as needed for spacing between options */
+        }
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Sep 18 2023 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    </style>
 </head>
 <body>
+<?php
+    // Replace with your database connection details
+    $servername = 'localhost';
+    $username = 'root';
+    $password = '';
+    $dbname = 'mywebsite';
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+    // Create a connection to the database
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/bell.jpg" alt="">
-        <span class="d-none d-lg-block">JBell</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
+    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
+        // Retrieve the activity ID from the URL
+        $activityId = $_GET["id"];
 
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
+        // Query to select the activity with the given ID
+        $sql = "SELECT id, title, content, date, time, location, ootd, status, remarks FROM activities WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $activityId);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
-
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
-          </a><!-- End Notification Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
-            </li>
-
-          </ul><!-- End Notification Dropdown Items -->
-
-        </li><!-- End Notification Nav -->
-
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
-              You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
-            </li>
-
-          </ul><!-- End Messages Dropdown Items -->
-
-        </li><!-- End Messages Nav -->
-
-        <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/unnamed.png" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">J. Indig</span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6>Junavel Indig</h6>
-              <span>Web Designer</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-person"></i>
-                <span>My Profile</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
-            </li>
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
-  </header><!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
-  <li class="nav-item">
-    <a class="nav-link" href="add_act.php">
-        <i class="bi bi-menu-button-wide"></i><span>Add Activities</span>
-    </a>
-</li>
-<!-- End Components Nav -->
-
-<li class="nav-item">
-  <a class="nav-link" href="activity_list.php">
-      <i class="bi bi-journal-text"></i><span>All Activities</span>
-  </a>
-</li>
-<!-- End Forms Nav -->
-
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-echarts.html">
-              <i class="bi bi-circle"></i><span>ECharts</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
-
-   
-
-      <li class="nav-heading">Pages</li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-
-</ul>
-  </aside><!-- End Sidebar-->
-
-
-
-<main id="main" class="main">
-    <div class="pagetitle">
-        <h1>Activities</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Activity</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-    <section class="section">
-        <?php
-        // Replace with your database connection details
-        $servername = 'localhost';
-        $username = 'root';
-        $password = '';
-        $dbname = 'mywebsite';
-
-        // Create a connection to the database
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check the connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        // Query to select all activities
-        $sql = "SELECT activity_id, title, content, date, time, location, ootd, status FROM activities";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            echo '<div class="row">';
-            echo '<div class="col-lg-12">';
-            echo '<div class="card">';
-            echo '<div class="card-body">';
-            echo '<h5 class="card-title">All Activities</h5>';
-
-            // Create a responsive table to display the list of activities
-            echo '<div class="table-responsive">';
-            echo '<table class="table table-striped table-bordered">';
-            echo '<thead>';
-            echo '<tr>';
-            echo '<th>Title</th>';
-            echo '<th>Content</th>';
-            echo '<th>Date</th>';
-            echo '<th>Time</th>';
-            echo '<th>Location</th>';
-            echo '<th>OOTD</th>';
-            echo '<th>Status</th>';
-            echo '<th>Action</th>';
-            echo '</tr>';
-            echo '</thead>';
-            echo '<tbody>';
-
-            // Output data of each activity
-            while ($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo '<td>' . $row['title'] . '</td>';
-                echo '<td>' . $row['content'] . '</td>';
-                echo '<td>' . $row['date'] . '</td>';
-                echo '<td>' . $row['time'] . '</td>';
-                echo '<td>' . $row['location'] . '</td>';
-                echo '<td>' . $row['ootd'] . '</td>';
-                echo '<td>' . $row['status'] . '</td>';
-                // Add an Edit link that includes the activity_id in the URL
-                echo '<td><button class="btn btn-primary edit-button" data-activity-id="' . $row['activity_id'] . '">Edit</button></td>';
-
-                echo '</tr>';
-            }
-
-            echo '</tbody>';
-            echo '</table>';
-            echo '</div>'; // Close the responsive table
-
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            // Store the activity details in variables
+            $id = $row["id"];
+            $title = $row["title"];
+            $content = $row["content"];
+            $date = $row["date"];
+            $time = $row["time"];
+            $location = $row["location"];
+            $ootd = $row["ootd"];
+            $status = $row["status"];
+            $remarks = $row["remarks"];
         } else {
-            echo 'No activities found.';
+            // Activity not found
+            echo "Activity not found.";
         }
+    } elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["editId"])) {
+        // Get form data
+        $id = $_POST["editId"];
+        $title = $_POST["editTitle"];
+        $content = $_POST["editContent"];
+        $date = $_POST["editDate"];
+        $time = $_POST["editTime"];
+        $location = $_POST["editLocation"];
+        $ootd = $_POST["editOOTD"];
+        $status = $_POST["editStatus"];
+        $remarks = $_POST["editRemarks"]; // Get Remarks data from the form
+        
+        // Update the activity in the database
+        $sql = "UPDATE activities SET title=?, content=?, date=?, time=?, location=?, ootd=?, status=?, remarks=? WHERE id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssssssi", $title, $content, $date, $time, $location, $ootd, $status, $remarks, $id);
+        
+        if ($stmt->execute()) {
+            // Redirect to the activities list page or display a success message
+            header("Location: activity_list.php");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+    }
+    // Close the prepared statement and database connection
+    $stmt->close();
+    $conn->close();
+?>
 
-        // Close the database connection
-        $conn->close();
-        ?>
-      </section>
+<div class="container">
+    <h1 style="font-family: Arial, sans-serif; color: #333;">Edit Activity</h1>
+    <form method="POST">
+        <input type="hidden" name="editId" value="<?php echo $id; ?>">
+        <div class="edit-form">
+            <label for="editTitle">Title:</label>
+            <input type="text" id="editTitle" name="editTitle" value="<?php echo $title; ?>">
+        </div>
 
+        <div class="edit-form">
+            <label for="editContent">Content:</label>
+            <textarea id="editContent" name="editContent" rows="4"><?php echo $content; ?></textarea>
+        </div>
 
-</main><!-- End #main -->
+        <div class="edit-form">
+            <label for="editDate">Date:</label>
+            <input type="date" id="editDate" name="editDate" value="<?php echo $date; ?>">
+        </div>
 
+        <div class="edit-form">
+            <label for="editTime">Time:</label>
+            <input type="time" id="editTime" name="editTime" value="<?php echo $time; ?>">
+        </div>
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>MyWebsite</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
+        <div class="edit-form">
+            <label for="editLocation">Location:</label>
+            <input type="text" id="editLocation" name="editLocation" value="<?php echo $location; ?>">
+        </div>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+        <div class="edit-form">
+            <label for="editOOTD">OOTD:</label>
+            <input type="text" id="editOOTD" name="editOOTD" value="<?php echo $ootd; ?>">
+        </div>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+        <label for="editStatus">Status:</label>
+        <select id="editStatus" name="editStatus">
+            <option value="Plan" <?php if ($status === 'Plan') echo 'selected'; ?>>Plan</option>
+            <option value="Cancel" <?php if ($status === 'Cancel') echo 'selected'; ?>>Cancel</option>
+            <option value="Done" <?php if ($status === 'Done') echo 'selected'; ?>>Done</option>
+        </select><br><br>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+        <div class="edit-form">
+            <label for="editRemarks">Remarks:</label>
+            <textarea id="editRemarks" name="editRemarks" rows="4"><?php echo $remarks; ?></textarea>
+        </div>
 
+        <button type="submit">Save Changes</button>
+        <a href="activity_list.php" class="btn btn-secondary">Back</a>
+    </form>
+</div>
 </body>
-
 </html>

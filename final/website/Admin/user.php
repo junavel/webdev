@@ -297,11 +297,7 @@
               <i class="bi bi-circle"></i><span>List Of Announcement</span>
             </a>
           </li>
-          <li>
-            <a href="history.php">
-              <i class="bi bi-circle"></i><span>History</span>
-            </a>
-          </li>
+          
           
         </ul>
       </li><!-- End Components Nav -->
