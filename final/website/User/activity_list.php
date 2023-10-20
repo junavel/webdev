@@ -335,99 +335,148 @@
         </nav>
     </div><!-- End Page Title -->
     <section class="section">
-        <?php
-        // Replace with your database connection details
-        $servername = 'localhost';
-        $username = 'root';
-        $password = '';
-        $dbname = 'mywebsite';
+      
+    <?php
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'mywebsite';
 
-        // Create a connection to the database
-        $conn = new mysqli($servername, $username, $password, $dbname);
+// Create a connection to the database
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-        // Check the connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-        // Query to select all activities
-        $sql = "SELECT id, title, content, date, time, location, ootd, status, remarks FROM activities";
-        $result = $conn->query($sql);
+// Query to select all activities
+$sql = "SELECT id, title, content, date, time, location, ootd, status, remarks FROM activities";
+$result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
-            echo '<div class="row">';
-            echo '<div class="col-lg-12">';
-            echo '<div class="card">';
-            echo '<div class="card-body">';
-            echo '<h5 class="card-title">All Activities</h5>';
+if ($result->num_rows > 0) {
+    echo '<div class="table-responsive">';
+    echo '<table class="table table-striped table-bordered">';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>Title</th>';
+    echo '<th>Content</th>';
+    echo '<th>Date</th>';
+    echo '<th>Time</th>';
+    echo '<th>Location</th>';
+    echo '<th>OOTD</th>';
+    echo '<th>Status</th>';
+    echo '<th>Action</th>';
+    echo '<th>Remarks</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
 
-            // Create a responsive table to display the list of activities
-            echo '<div class="table-responsive">';
-            echo '<table class="table table-striped table-bordered">';
-            echo '<thead>';
-            echo '<tr>';
-            echo '<th>Title</th>';
-            echo '<th>Content</th>';
-            echo '<th>Date</th>';
-            echo '<th>Time</th>';
-            echo '<th>Location</th>';
-            echo '<th>OOTD</th>';
-            echo '<th>Status</th>';
-            echo '<th>Action</th>';
-            echo '<th>Remarks</th>';
-            echo '</tr>';
-            echo '</thead>';
-            echo '<tbody>';
+    while ($row = $result->fetch_assoc()) {
+        echo '<tr>';
+        echo '<td>' . $row['title'] . '</td>';
+        echo '<td>' . $row['content'] . '</td>';
+        echo '<td>' . $row['date'] . '</td>';
+        echo '<td>' . $row['time'] . '</td>';
+        echo '<td>' . $row['location'] . '</td>';
+        echo '<td>' . $row['ootd'] . '</td>';
+        echo '<td>' . $row['status'] . '</td>';
+        echo '<td>';
+        echo '<div class="btn-group">';
+        echo '<a href="edit.php?id=' . $row['id'] . '" class="btn btn-primary">Edit</a>';
+        echo '<button class="btn btn-danger delete-button" data-toggle="modal" data-target="#deleteModal" data-activity-id="' . $row['id'] . '">Delete</button>';
+        echo '</div>';
+        echo '</td>';
+        echo '<td>' . $row['remarks'] . '</td>';
+        echo '</tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+    echo '</div>';
+} else {
+    echo 'No activities found.';
+}
 
-            // Output data of each activity
-            while ($row = $result->fetch_assoc()) {
-              echo '<tr>';
-              echo '<td>' . $row['title'] . '</td>';
-              echo '<td>' . $row['content'] . '</td>';
-              echo '<td>' . $row['date'] . '</td>';
-              echo '<td>' . $row['time'] . '</td>';
-              echo '<td>' . $row['location'] . '</td>';
-              echo '<td>' . $row['ootd'] . '</td>';
-              echo '<td>' . $row['status'] . '</td>';
-              echo '<td><button class="btn btn-primary edit-button" data-activity-id="' . $row['id'] . '">Edit</button></td>';
-              echo '<td>' . $row['remarks'] . '</td>';
-              echo '</tr>';
+// Close the database connection
+$conn->close();
+?>
+<!-- Modal for Delete Confirmation -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this activity?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<script>
+    // Get all the "Edit" buttons by their class name
+    const editButtons = document.querySelectorAll('.edit-button');
+
+    // Function to handle the "Edit" button click
+    function handleEditClick(event) {
+        // Get the activity ID from the button's data-activity-id attribute
+        const activityId = event.currentTarget.getAttribute('data-activity-id');
+
+        // Redirect to the edit page (edit.php) with the activity ID as a parameter
+        window.location.href = `edit.php?id=${activityId}`;
+    }
+
+    // Add a click event listener to each "Edit" button
+    editButtons.forEach((button) => {
+        button.addEventListener('click', handleEditClick);
+    });
+
+    // Handle Delete button click
+    $('.delete-button').click(function() {
+        var activityId = $(this).data('activity-id');
+        $('#confirmDelete').data('activity-id', activityId);
+    });
+
+    // Show the confirmation modal when the "Delete" button is clicked
+    $('#deleteModal').on('show.bs.modal', function(e) {
+        var button = $(e.relatedTarget);
+        var activityId = button.data('activity-id');
+
+        // Update the #confirmDelete button's data-activity-id attribute
+        $('#confirmDelete').data('activity-id', activityId);
+    });
+
+    // Handle Confirm button click in the modal
+    $('#confirmDelete').on('click', function() {
+        // Send an AJAX request to delete the activity
+        var activityId = $(this).data('activity-id');
+        $.ajax({
+            url: 'delete.php',
+            type: 'POST',
+            data: { id: activityId },
+            success: function(data) {
+                alert(data);
+                // Close the modal after deletion
+                $('#deleteModal').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Error deleting activity.');
             }
-            echo '</tbody>';
-            echo '</table>';
-            echo '</div>'; // Close the responsive table
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
-        } else {
-            echo 'No activities found.';
-        }
-
-        // Close the database connection
-        $conn->close();
-        ?>
-    </section>
-    <script>
-        // Get all the "Edit" buttons by their class name
-        const editButtons = document.querySelectorAll('.edit-button');
-
-        // Function to handle the "Edit" button click
-        function handleEditClick(event) {
-            // Get the activity ID from the button's data-activity-id attribute
-            const activityId = event.currentTarget.getAttribute('data-activity-id');
-
-            // Redirect to the edit page (edit.php) with the activity ID as a parameter
-            window.location.href = `edit.php?id=${activityId}`;
-        }
-
-        // Add a click event listener to each "Edit" button
-        editButtons.forEach((button) => {
-            button.addEventListener('click', handleEditClick);
         });
+    });
+</script>
 
 
-    </script>
+
+    
 </main>
 
   <!-- ======= Footer ======= -->
@@ -447,6 +496,11 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
+  <!-- Include Bootstrap CSS and JavaScript -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/chart.js/chart.umd.js"></script>

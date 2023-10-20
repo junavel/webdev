@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Forms / Elements - NiceAdmin Bootstrap Template</title>
+  <title>Users Activities</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -37,6 +37,12 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
+<style>
+        #barChart {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 
 <body>
 
@@ -361,89 +367,69 @@
       </li><!-- End Contact Page Nav -->
 
     </ul>
+  </aside>
 
-  </aside><!-- End Sidebar-->
-  <main>
-    <div style="width: 80%; margin: 0 auto;">
-        <canvas id="activityChart" style="max-height: 400px;"></canvas>
+  <main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Users Activities Bar Chart</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Bar Chart</li>
+                <li class="breadcrumb-item active">Users Activities</li>
+            </ol>
+        </nav>
     </div>
+    <section class="section">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body" style="text-align: center;">
+                    <h5 class="card-title">Bar Chart</h5>
+
+                    <div style="width: 80%; margin: 0 auto;">
+                        <canvas id="activityChart" style="max-height: 400px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 
 <!-- Include Chart.js library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<?php
-// Database connection details
-$servername = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'mywebsite';
-
-// Create a connection to the database
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-/// SQL query to count activities for each month
-$sql = "SELECT MONTH(date) AS month, COUNT(id) AS activity_count FROM activities GROUP BY MONTH(date)";
-
-// Execute the query
-$result = $conn->query($sql);
-
-// Initialize arrays to store months and activity counts
-$months = [];
-$activityCounts = [];
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $months[] = $row['month'];
-        $activityCounts[] = $row['activity_count'];
-    }
-}
-
-
-// Close the database connection
-$conn->close();
-?>
-
 <script>
-  // Create a bar chart using Chart.js
-var ctx = document.getElementById('activityChart').getContext('2d');
-var activityChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: <?php echo json_encode($months); ?>, // Months (numeric)
-        datasets: [{
-            label: 'Activity Count',
-            data: <?php echo json_encode($activityCounts); ?>, // Activity counts
-            backgroundColor: 'rgba(75, 192, 192, 0.6)', // Bar color
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            x: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Months'
-                }
-            },
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Activity Count'
-                }
-            }
-        }
-    }
-});
-
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch('bar.php')
+            .then(response => response.json())
+            .then(data => {
+                var ctx = document.getElementById('activityChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            'January', 'February', 'March', 'April', 'May', 'June',
+                            'July', 'August', 'September', 'October', 'November', 'December'
+                        ],
+                        datasets: [{
+                            label: 'Activity Count',
+                            data: data.data,
+                            backgroundColor: data.colors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    });
 </script>
+
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
