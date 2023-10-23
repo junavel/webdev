@@ -4,32 +4,38 @@
 </head>
 <body>
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $activity_id = $_POST['id'];
 
-    // Perform the deletion in the database
-    // Modify this code to suit your database structure
-    $servername = 'localhost';
-    $username = 'root';
-    $password = '';
-    $dbname = 'mywebsite';
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'mywebsite';
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+// Create a connection to the database
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "DELETE FROM activities WHERE id = $activity_id";
-    if ($conn->query($sql) === TRUE) {
-        echo "Activity deleted successfully";
-    } else {
-        echo "Error deleting activity: " . $conn->error;
-    }
-
-    $conn->close();
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-?>
 
+// Retrieve the user ID from the query parameter
+if (isset($_GET['id'])) {
+    $activity_id = $_GET['id'];
+
+    // Create a SQL query to delete the user based on ID
+    $sql = "DELETE FROM activities WHERE id = $activity_id";
+
+
+    // Execute the query
+    if ($conn->query($sql) === TRUE) {
+        echo "User deleted successfully";
+    } else {
+        echo "Error deleting user: " . $conn->error;
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
 </body>
 </html>

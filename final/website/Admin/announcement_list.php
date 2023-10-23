@@ -363,12 +363,10 @@
 
   </aside><!-- End Sidebar-->
 
-  <main id="main" class="main">
     
 
   <main id="main" class="main">
         <div class="container mt-5">
-            <h2>List of Announcements</h2>
             <div class="announcement-list">
                 <?php
                 // Replace with your database connection details

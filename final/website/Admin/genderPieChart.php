@@ -383,93 +383,66 @@
                             <h5 class="card-title">Pie Chart</h5>
     
                             <!-- Pie Chart -->
-                            <div style="width: 80%; margin: 0 auto;">
-        <canvas id="activityChart" style="max-height: 400px;"></canvas>
-    </div>
-
-    <?php
-$servername = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'mywebsite';
-
-// Create a connection to the database
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// SQL query to count activities for each month
-$sql = "SELECT MONTH(date) AS month_number, COUNT(id) AS activity_count FROM activities GROUP BY MONTH(date)";
-
-// Execute the query
-$result = $conn->query($sql);
-
-if ($result) {
-    $data = array_fill(1, 12, 0); // Initialize an array with zeros for each month
-    $colors = array(); // Initialize an empty array for colors
-
-    while ($row = $result->fetch_assoc()) {
-        $month = $row['month_number'];
-        $activity_count = $row['activity_count'];
-        $data[$month] = $activity_count;
-        // Assign a default color (e.g., blue) for each month
-        $colors[] = 'rgba(54, 162, 235, 0.6)';
-    }
-
-    // Return data as JSON
-    $response = array(
-        'data' => array_values($data),
-        'colors' => $colors
-    );
-
-    header('Content-Type: application/json');
-    echo json_encode($response);
-} else {
-    // Log any errors to the PHP error log
-    error_log("MySQL Error: " . $conn->error);
-}
-
-$conn->close();
-?>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch(location.href)
-                .then(response => response.json())
-                .then(data => {
-                    var ctx = document.getElementById('activityChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: [
-                                'January', 'February', 'March', 'April', 'May', 'June',
-                                'July', 'August', 'September', 'October', 'November', 'December'
-                            ],
-                            datasets: [{
-                                label: 'Activity Count',
-                                data: data.data,
-                                backgroundColor: data.colors,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            scales: {
-                                y: {
-                                    beginAtZero: true
+                            <canvas id="genderPieChart"></canvas>
+    
+                            <?php
+                            // Replace with your database connection details
+                            $servername = 'localhost';
+                            $username = 'root';
+                            $password = '';
+                            $dbname = 'mywebsite';
+    
+                            // Create a connection to the database
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+    
+                            // Check the connection
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+    
+                            // Query to count the number of users by gender
+                            $sql = "SELECT gender, COUNT(*) as count FROM access GROUP BY gender";
+                            $result = $conn->query($sql);
+    
+                            $labels = [];
+                            $data = [];
+                            $colors = ['rgb(154,205,50)', 'rgb(255, 192, 203)', 'rgb(54, 162, 235)']; // Define colors
+    
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $labels[] = $row['gender'];
+                                    $data[] = $row['count'];
                                 }
                             }
-                        }
-                    });
-                });
-        });
-    </script>
-    </section>
+                            ?>
+    
+                            <script>
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    new Chart(document.getElementById("genderPieChart"), {
+                                        type: 'pie',
+                                        data: {
+                                            labels: <?php echo json_encode($labels); ?>,
+                                            datasets: [{
+                                                data: <?php echo json_encode($data); ?>,
+                                                backgroundColor: <?php echo json_encode($colors); ?>,
+                                            }],
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            legend: {
+                                                display: true,
+                                            },
+                                        },
+                                    });
+                                });
+                            </script>
+                            <!-- End Pie Chart -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
-
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">

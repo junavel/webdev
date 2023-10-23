@@ -370,66 +370,63 @@
   </aside>
 
   <main id="main" class="main">
-    <div class="pagetitle">
-        <h1>Users Activities Bar Chart</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Bar Chart</li>
-                <li class="breadcrumb-item active">Users Activities</li>
-            </ol>
-        </nav>
-    </div>
-    <section class="section">
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body" style="text-align: center;">
-                    <h5 class="card-title">Bar Chart</h5>
-
-                    <div style="width: 80%; margin: 0 auto;">
-                        <canvas id="activityChart" style="max-height: 400px;"></canvas>
+        <div class="pagetitle">
+            <h1>Users Activities Bar Chart</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Bar Chart</li>
+                    <li class="breadcrumb-item active">Users Activities</li>
+                </ol>
+            </nav>
+        </div>
+        <section class="section">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body" style="text-align: center;">
+                        <h5 class="card-title">Bar Chart</h5>
+                        <div style="width: 80%; margin: 0 auto;">
+                            <canvas id="activityChart" style="max-height: 400px;"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
 
-<!-- Include Chart.js library -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        fetch('bar.php')
-            .then(response => response.json())
-            .then(data => {
-                var ctx = document.getElementById('activityChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: [
-                            'January', 'February', 'March', 'April', 'May', 'June',
-                            'July', 'August', 'September', 'October', 'November', 'December'
-                        ],
-                        datasets: [{
-                            label: 'Activity Count',
-                            data: data.data,
-                            backgroundColor: data.colors,
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
+    <script>
+       document.addEventListener("DOMContentLoaded", () => {
+    fetch('bar.php')
+        .then(response => response.json())
+        .then(data => {
+            var ctx = document.getElementById('activityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'
+                    ],
+                    datasets: [{
+                        label: 'Activity Count',
+                        data: data.data,
+                        backgroundColor: data.colors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            suggestedMax: 10 
                         }
                     }
-                });
+                }
             });
-    });
+        });
+});
 </script>
-
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -437,10 +434,6 @@
       &copy; Copyright <strong><span>JBell</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
       Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
   </footer><!-- End Footer -->

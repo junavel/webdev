@@ -399,6 +399,8 @@ if ($result->num_rows > 0) {
 // Close the database connection
 $conn->close();
 ?>
+
+
 <!-- Modal for Delete Confirmation -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -414,69 +416,46 @@ $conn->close();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                <a id="confirmDelete" class="btn btn-danger" href="delete.php?id=<?php echo $row['id']; ?>">Delete</a>
+
             </div>
         </div>
     </div>
 </div>
 </section>
 <script>
-    // Get all the "Edit" buttons by their class name
-    const editButtons = document.querySelectorAll('.edit-button');
+  // Get all the "Edit" buttons by their class name
+  const editButtons = document.querySelectorAll('.edit-button');
 
-    // Function to handle the "Edit" button click
-    function handleEditClick(event) {
-        // Get the activity ID from the button's data-activity-id attribute
-        const activityId = event.currentTarget.getAttribute('data-activity-id');
+// Function to handle the "Edit" button click
+function handleEditClick(event) {
+    // Get the activity ID from the button's data-activity-id attribute
+    const activityId = event.currentTarget.getAttribute('data-activity-id');
 
-        // Redirect to the edit page (edit.php) with the activity ID as a parameter
-        window.location.href = `edit.php?id=${activityId}`;
-    }
+    // Redirect to the edit page (edit.php) with the activity ID as a parameter
+    window.location.href = `edit.php?id=${activityId}`;
+}
 
-    // Add a click event listener to each "Edit" button
-    editButtons.forEach((button) => {
-        button.addEventListener('click', handleEditClick);
-    });
+// Add a click event listener to each "Edit" button
+editButtons.forEach((button) => {
+    button.addEventListener('click', handleEditClick);
+});
 
-    // Handle Delete button click
-    $('.delete-button').click(function() {
-        var activityId = $(this).data('activity-id');
-        $('#confirmDelete').data('activity-id', activityId);
-    });
-
-    // Show the confirmation modal when the "Delete" button is clicked
-    $('#deleteModal').on('show.bs.modal', function(e) {
-        var button = $(e.relatedTarget);
-        var activityId = button.data('activity-id');
-
-        // Update the #confirmDelete button's data-activity-id attribute
-        $('#confirmDelete').data('activity-id', activityId);
-    });
+ // Handle Delete button click
+ $('.delete-button').click(function() {
+    var activityId = $(this).data('activity-id');
+    console.log('Activity ID:', activityId); // Check the value in the browser console
+    $('#activityId').val(activityId);
+});
 
     // Handle Confirm button click in the modal
     $('#confirmDelete').on('click', function() {
-        // Send an AJAX request to delete the activity
-        var activityId = $(this).data('activity-id');
-        $.ajax({
-            url: 'delete.php',
-            type: 'POST',
-            data: { id: activityId },
-            success: function(data) {
-                alert(data);
-                // Close the modal after deletion
-                $('#deleteModal').modal('hide');
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-                alert('Error deleting activity.');
-            }
-        });
+        // Submit the form to delete.php
+        $('#deleteForm').submit();
+        
     });
 </script>
 
-
-
-    
 </main>
 
   <!-- ======= Footer ======= -->

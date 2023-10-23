@@ -35,7 +35,7 @@ if ($result) {
         11 => 'rgba(153, 102, 255, 0.6)',
         12 => 'rgba(255, 159, 64, 0.6)'
     );
-
+    
     while ($row = $result->fetch_assoc()) {
         $month_number = $row['month_number'];
         $activity_count = $row['activity_count'];
