@@ -420,156 +420,153 @@
                 </li>
 
               </ul>
+              
+ <?php
+ $servername = 'localhost';
+ $username = 'root';
+ $password = '';
+ $dbname = 'mywebsite';
+ 
+ // Create a connection to the database
+ $conn = new mysqli($servername, $username, $password, $dbname);
+ 
+ if ($conn->connect_error) {
+     die("Connection failed: " . $conn->connect_error);
+ }
+ 
+ // Assuming you have a user_id to identify the user you want to display
+ $user_id = 1; // Replace with the actual user ID
+ $firstName = $_POST['firstName'];
+$lastName = $_POST['lastName'];
+
+ 
+ // Query to retrieve user information
+ $sql = "SELECT * FROM access WHERE id = $user_id"; // Adjust the table and columns as needed
+ 
+ $result = $conn->query($sql);
+ 
+ if ($result->num_rows > 0) {
+     $user = $result->fetch_assoc();
+     $fullName = $user['firstname'] . ' ' . $user['lastname'];
+     $job = $user['job'];
+     $country = $user['country'];
+     $address = $user['address'];
+     $phone = $user['phone'];
+     $email = $user['email'];
+     $firstName = isset($_POST['first_name']) ? $_POST['first_name'] : '';
+$lastName = isset($_POST['last_name']) ? $_POST['last_name'] : '';
+
+ }
+ 
+ // Close the database connection
+ $conn->close();
+   
+ ?>
               <div class="tab-content pt-2">
-
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
-
+                
+              
                   <h5 class="card-title">Profile Details</h5>
-
+              
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Junavel Indig</div>
+                    <div class="col-lg-3 col-md-4 label ">First Name</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $firstName; ?></div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                    <div class="col-lg-3 col-md-4 label ">Last Name</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $lastName; ?></div>
                   </div>
-
+              
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $job; ?></div>
                   </div>
-
+              
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $country; ?></div>
                   </div>
-
+              
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $address; ?></div>
                   </div>
-
+              
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $phone; ?></div>
                   </div>
-
+              
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">junavah@gmail.com</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $email; ?></div>
                   </div>
-
+              
                 </div>
+              </div>
+              
 
-                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+              <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+  <!-- Profile Edit Form -->
+  <form method="POST" action="update-profile.php">
+    <div class="row mb-3">
+      <label for="first_name" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+      <div class="col-md-8 col-lg-9">
+        <input name="first_name" type="text" class="form-control" id="first_name" value="<?php echo $firstName; ?>">
+      </div>
+    </div>
 
-                  <!-- Profile Edit Form -->
-                  <form>
-                    <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/unnamed.png" alt="Profile">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                        </div>
-                      </div>
-                    </div>
+    <div class="row mb-3">
+      <label for="last_name" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+      <div class="col-md-8 col-lg-9">
+        <input name="last_name" type="text" class="form-control" id="last_name" value="<?php echo $lastName; ?>">
+      </div>
+    </div>
 
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
-                      </div>
-                    </div>
+    <div class="row mb-3">
+      <label for="job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+      <div class="col-md-8 col-lg-9">
+        <input name="job" type="text" class="form-control" id="job" value="<?php echo $job; ?>">
+      </div>
+    </div>
 
-                    <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
-                      <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
-                      </div>
-                    </div>
+    <div class="row mb-3">
+      <label for="country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+      <div class="col-md-8 col-lg-9">
+        <input name="country" type="text" class="form-control" id="country" value="<?php echo $country; ?>">
+      </div>
+    </div>
 
-                    <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
-                      </div>
-                    </div>
+    <div class="row mb-3">
+      <label for="address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+      <div class="col-md-8 col-lg-9">
+        <input name="address" type="text" class="form-control" id="address" value="<?php echo $address; ?>">
+      </div>
+    </div>
 
-                    <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
-                      </div>
-                    </div>
+    <div class="row mb-3">
+      <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+      <div class="col-md-8 col-lg-9">
+        <input name="phone" type="text" class="form-control" id="phone" value="<?php echo $phone; ?>">
+      </div>
+    </div>
 
-                    <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
-                      </div>
-                    </div>
+    <div class="row mb-3">
+      <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+      <div class="col-md-8 col-lg-9">
+        <input name="email" type="email" class="form-control" id="email" value="<?php echo $email; ?>">
+      </div>
+    </div>
 
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
-                      </div>
-                    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </div>
+  </form>
+  <!-- End Profile Edit Form -->
+</div>
 
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
-                      </div>
-                    </div>
 
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="junavah@gmail.com">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End Profile Edit Form -->
-
-                </div>
 
                 <div class="tab-pane fade pt-3" id="profile-settings">
 
