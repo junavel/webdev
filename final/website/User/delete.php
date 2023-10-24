@@ -25,10 +25,11 @@ if (isset($_GET['id'])) {
     // Create a SQL query to delete the user based on ID
     $sql = "DELETE FROM activities WHERE id = $activity_id";
 
-
     // Execute the query
     if ($conn->query($sql) === TRUE) {
-        echo "User deleted successfully";
+        // Redirect to activity_list.php
+        header("Location: activity_list.php");
+        exit(); // Important to stop further script execution
     } else {
         echo "Error deleting user: " . $conn->error;
     }
@@ -39,3 +40,4 @@ $conn->close();
 ?>
 </body>
 </html>
+    
